@@ -1,4 +1,4 @@
-#if !defined(__ALIGNER__)
+if !defined(__ALIGNER__)
 #define __ALIGNER__
 
 #include "alignbase.h"
