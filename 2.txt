@@ -1,4 +1,5 @@
-if !defined(__ALIGNER__)
+#if !defined(__ALIGNER__)
+>>>>>>> new
 #define __ALIGNER__
 
 #include "alignbase.h"
@@ -6,21 +7,15 @@ if !defined(__ALIGNER__)
 #include "AlgoConfig.h"
 #include "ClassFactory.h"
 #include "log.hpp"
-#include "landMarkSelection.hpp"
 #include <string>
 
-//template model
-typedef enum{
-    globalAlign=0,
-    localAlign,
-}TemplateModel;
-
-
+>>>>>>> new
 //no memory handling
 //init and uninit not necessary
 class Aligner
 {
 public:
+<<<<<<< HEAD
     Aligner();
     ~Aligner();
 
@@ -48,7 +43,20 @@ private:
     int mSerchRange, mFilterSize;
     std::vector<IppiPoint> landMarkPoints, position;
     std::multimap<float, IppiPoint> refShift;
-    WRMat *mMapD, *mMapE, *mBuf, *mBuf0;
+    Aligner() { mX = 0.0f; mY = 0.0f; mScore = 0.0f;};
+    ~Aligner() {};
+
+public:
+    void configure();
+    void doAlign(WRMat& ref0, WRMat& test);
+    void getResult(float& x, float& y, float& s) { x=mX; y=mY; s= mScore;};
+
+private:
+    AlignBase* mAligner;
+    float mX, mY, mScore;
+    std::string mTemplate, mFilterMethod;
+    int mSerchRange, mFilterSize;
+>>>>>>> new
 };
 
 #endif //!defined(__ALIGNER__)
