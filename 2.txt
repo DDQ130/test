@@ -6,50 +6,26 @@
 #include "AlgoConfig.h"
 #include "ClassFactory.h"
 #include "log.hpp"
-#include "landMarkSelection.hpp"
 #include <string>
-
-//template model
-typedef enum{
-    globalAlign=0,
-    localAlign,
-}TemplateModel;
-
 
 //no memory handling
 //init and uninit not necessary
 class Aligner
 {
 public:
-    Aligner();
-    ~Aligner();
+    Aligner() { mX = 0.0f; mY = 0.0f; mScore = 0.0f;};
+    ~Aligner() {};
 
 public:
-    void Init();
-    void UnInit();
     void configure();
     void doAlign(WRMat& ref0, WRMat& test);
-    void doGlobalAlign(WRMat& ref0, WRMat& test);
     void getResult(float& x, float& y, float& s) { x=mX; y=mY; s= mScore;};
-private:
-    double getLength(IppiPoint a, IppiPoint b);
-    void mulPointsMedian(std::multimap<float, IppiPoint> refShift, std::vector<IppiPoint> landMarkPoints);
-    void landMarkShift(WRMat &ref, WRMat &test, std::vector<IppiPoint> position);
-    IppiPoint finalShift(std::vector<IppiPoint> pos, IppiPoint center, IppiPoint& finalPt);
-    IppStatus findCandidate(WRMat& map, Ipp32f thresh, std::vector<IppiPoint>& position);
 
 private:
-    LandMarkSelection* mLmSelect;
     AlignBase* mAligner;
-    TemplateModel mTmpModel;
-    bool isMarkSelected;
     float mX, mY, mScore;
-    std::string mTemplate, mGlobalAlign, mFilterMethod;
+    std::string mTemplate, mFilterMethod;
     int mSerchRange, mFilterSize;
-    std::vector<IppiPoint> landMarkPoints, position;
-    std::multimap<float, IppiPoint> refShift;
-    WRMat *mMapD, *mMapE, *mBuf, *mBuf0;
 };
 
 #endif //!defined(__ALIGNER__)
-
